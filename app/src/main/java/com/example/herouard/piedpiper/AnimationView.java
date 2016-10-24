@@ -84,6 +84,7 @@ public class AnimationView extends View {
 
         // On creer la matrice
         matrix = new Matrix();
+
     }
 
     @Override

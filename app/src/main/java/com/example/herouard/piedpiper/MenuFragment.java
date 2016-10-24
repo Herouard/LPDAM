@@ -1,18 +1,12 @@
 package com.example.herouard.piedpiper;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -34,7 +28,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
 
         color = Color.RED;
-
         VitesseValue = 0;
         EntiteValue = 5;
         teamChosen = 0;

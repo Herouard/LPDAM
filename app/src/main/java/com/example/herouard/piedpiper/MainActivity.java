@@ -1,28 +1,18 @@
 package com.example.herouard.piedpiper;
 
-import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.NumberPicker;
-import android.widget.TabHost;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, MenuFragment.OnActionListener, GameFragment.OnWinListener {
 

@@ -36,6 +36,5 @@ public class PopUp extends Activity {
         getWindow().setLayout(width, height);
         getWindow().setBackgroundDrawableResource(R.color.translucent_black);
         ll2.setBackgroundResource(R.drawable.heart);
-
     }
 }
