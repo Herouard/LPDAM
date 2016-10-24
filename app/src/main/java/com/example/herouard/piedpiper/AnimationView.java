@@ -53,7 +53,7 @@ public class AnimationView extends View {
         InitParam(bm,vitesse,intru);
     }
 
-    public void InitParam(Bitmap[] bm, int vitesse,int intru){;
+    public void InitParam(Bitmap[] bm, int vitesse, int intru) {
 
         //On recupere la taille de l'ecran
         screenSizeX = getResources().getDisplayMetrics().widthPixels;

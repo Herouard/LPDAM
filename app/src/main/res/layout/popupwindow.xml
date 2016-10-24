@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#00ffffff"
-    android:id="@+id/popLayout">
+    android:id="@+id/popLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00ffffff">
 
     <RelativeLayout
+        android:id="@+id/popUpInerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
-        android:background="#ffffff"
-        android:id="@+id/popUpInerLayout">
+        android:background="#ffffff">
 
         <TextView
+            android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Gagné !"
-            android:id="@+id/textView12"
-            android:layout_column="0"
-            android:layout_row="0"
-            android:layout_gravity="center_horizontal"
-            android:textAlignment="center"
-            android:layout_weight="0"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="0"
+            android:layout_weight="0"
+            android:text="Gagné !"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 </RelativeLayout>

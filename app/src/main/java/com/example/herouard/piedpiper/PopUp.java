@@ -33,7 +33,7 @@ public class PopUp extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width),(int)(height));
+        getWindow().setLayout(width, height);
         getWindow().setBackgroundDrawableResource(R.color.translucent_black);
         ll2.setBackgroundResource(R.drawable.heart);
 
