@@ -20,22 +20,36 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
     int teamChosen;
     int shipChosen;
 
+    int[] tabPref;
+    C_LocalData localData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_menu_fragment, null);
 
+        localData = new C_LocalData(getContext());
+
+        if(localData != null){
+            this.tabPref=localData.recupPref();
+            this.EntiteValue = tabPref[0];
+            this.teamChosen = tabPref[1];
+            this.shipChosen = tabPref[2];
+            this.VitesseValue = tabPref[3];
+        }
+        else{
+            VitesseValue = 0;
+            EntiteValue = 5;
+            teamChosen = 0;
+            shipChosen = 0;
+        }
 
         color = Color.RED;
-        VitesseValue = 0;
-        EntiteValue = 5;
-        teamChosen = 0;
-        shipChosen = 0;
 
         NumberPicker np = (NumberPicker) rootView.findViewById(R.id.Np);
         np.setMinValue(5);
         np.setMaxValue(20);
+        np.setValue(EntiteValue);
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -46,6 +60,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         SeekBar sb1 = (SeekBar) rootView.findViewById(R.id.seekBar);
         sb1.setMax(10);
+        sb1.setProgress(VitesseValue);
         sb1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -79,6 +94,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         shipsList[2].setOnClickListener(this);
         shipsList[3] = (TextView) rootView.findViewById(R.id.tv6);
         shipsList[3].setOnClickListener(this);
+
+        setShipsForTeam(teamChosen);
 
         return rootView;
     }

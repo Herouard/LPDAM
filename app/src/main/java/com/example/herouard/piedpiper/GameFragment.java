@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,14 +22,37 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
     LinearLayout Container;
     OnWinListener winListener;
 
+    int[] tabPref;
+    C_LocalData localData;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         intru = 0;
-        this.entite = 5;
-        this.vitesse = 15;
-        teamChosen = 0;
-        shipChosen = 0;
+
+        localData = new C_LocalData(getContext());
+
+        if(localData != null){
+            this.tabPref=localData.recupPref();
+            this.entite = tabPref[0];
+            this.teamChosen = tabPref[1];
+            this.shipChosen = tabPref[2];
+            this.vitesse= tabPref[3]+15;
+
+
+            Log.i("hbb,jbn",String.valueOf(entite));
+            Log.i("hbb,jbn",String.valueOf(teamChosen));
+            Log.i("hbb,jbn",String.valueOf(shipChosen));
+            Log.i("hbb,jbn",String.valueOf(vitesse));
+
+        }
+        else{
+            vitesse = 15;
+            entite = 5;
+            teamChosen = 0;
+            shipChosen = 0;
+        }
     }
 
     @Override
@@ -38,9 +62,9 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
         bm = new Bitmap[entite];
         for(int j=0; j<bm.length;j++){
             if(j==intru){
-                bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(1,0,false));
+                bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(1,shipChosen,false));
             } else{
-                bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(0,0,false));
+                bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(teamChosen,shipChosen,false));
             }
         }
         animV = new AnimationView(getContext(),bm,vitesse,intru);

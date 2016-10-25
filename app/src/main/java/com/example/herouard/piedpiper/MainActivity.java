@@ -26,12 +26,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     //param pour la next view
     int entite,vitesse,teamChosen,shipChosen;
+    C_LocalData localData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        localData = new C_LocalData(this);
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         tf1 = new GameFragment();
         npf1 = new MenuFragment();
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         this.vitesse=vitesse;
         this.teamChosen=teamChosen;
         this.shipChosen=shipChosen;
-
+        localData.envoiPref(this.entite,this.teamChosen,this.shipChosen,this.vitesse);
         tf1.setText(this.entite,this.vitesse,this.teamChosen,this.shipChosen,false);
 
     }
