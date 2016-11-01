@@ -7,23 +7,59 @@
 
     <RelativeLayout
         android:id="@+id/popUpInerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="40dp"
-        android:background="#ffffff">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal"
-            android:layout_row="0"
-            android:layout_weight="0"
-            android:text="Gagné !"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="V i c t o i r e"
+            android:id="@+id/textView3"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="#30ff00"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="#ffffff"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:padding="10dp"
+            android:paddingTop="10dp" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textView5"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="En : "
+            android:id="@+id/textView4"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:textColor="#ff0000"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="#ffffff"
+            android:textAlignment="center"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:paddingTop="10dp" />
+
     </RelativeLayout>
+
 </RelativeLayout>

@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, MenuFragment.OnActionListener, GameFragment.OnWinListener {
 
@@ -91,27 +90,32 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         this.teamChosen=teamChosen;
         this.shipChosen=shipChosen;
         localData.envoiPref(this.entite,this.teamChosen,this.shipChosen,this.vitesse);
-        tf1.setText(this.entite,this.vitesse,this.teamChosen,this.shipChosen,false);
+        tf1.setText(this.entite,this.vitesse,this.teamChosen,this.shipChosen);
 
     }
 
     @Override
     public void onWin(boolean winStatus) {
         if(winStatus==true){
+            mMediaPlayer = MediaPlayer.create(this,R.raw.laser);
+            mMediaPlayer.start();
             mMediaPlayer = MediaPlayer.create(this,R.raw.xplosion);
             mMediaPlayer.start();
             v.vibrate(500);
-            //On en est la avec ce truc a verifier qu'il ne soient pas vide avant de le lancer
-            tf1.setText(this.entite,this.vitesse,this.teamChosen,this.shipChosen,true);
+
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i("win: ", "WIIIIIIIIIIN");
                     mViewPager.setCurrentItem(0,false);
-                    startActivity(new Intent(MainActivity.this,PopUp.class));
+                    tf1.animV.xplosed=false;
+                    Intent intent = new Intent(MainActivity.this, PopUp.class);
+                    intent.putExtra("team", teamChosen);
+                    intent.putExtra("numberOfShots", tf1.numberOfShots);
+                    tf1.numberOfShots=0;
+                    startActivity(intent);
                 }
-            }, 1000);
+            }, 1300);
         }
         else{
             mMediaPlayer = MediaPlayer.create(this,R.raw.laser);

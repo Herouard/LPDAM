@@ -3,10 +3,10 @@ package com.example.herouard.piedpiper;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 public class GameFragment extends Fragment implements View.OnTouchListener{
 
-    int entite,vitesse, teamChosen, shipChosen;
+    int entite,vitesse, teamChosen, shipChosen,laserColor,numberOfShots;
     Bitmap[] bm;
     int intru;
     AnimationView animV;
@@ -30,6 +30,8 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
         super.onCreate(savedInstanceState);
 
         intru = 0;
+        laserColor = Color.GREEN;
+        numberOfShots = 0;
 
         localData = new C_LocalData(getContext());
 
@@ -39,13 +41,6 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
             this.teamChosen = tabPref[1];
             this.shipChosen = tabPref[2];
             this.vitesse= tabPref[3]+15;
-
-
-            Log.i("hbb,jbn",String.valueOf(entite));
-            Log.i("hbb,jbn",String.valueOf(teamChosen));
-            Log.i("hbb,jbn",String.valueOf(shipChosen));
-            Log.i("hbb,jbn",String.valueOf(vitesse));
-
         }
         else{
             vitesse = 15;
@@ -67,14 +62,18 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
                 bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(teamChosen,shipChosen,false));
             }
         }
-        animV = new AnimationView(getContext(),bm,vitesse,intru);
+        if(teamChosen==0){
+            laserColor=Color.GREEN;
+        } else {laserColor=Color.RED;}
+
+        animV = new AnimationView(getContext(),bm,vitesse,intru,laserColor);
         Container.addView(animV);
         animV.setOnTouchListener(this);
 
         return Container;
     }
 
-    public void setText(int entite, int vitesse, int teamChosen, int shipChosen, boolean xplosed){
+    public void setText(int entite, int vitesse, int teamChosen, int shipChosen){
         this.entite = entite;
         this.vitesse = 15+vitesse;
         this.teamChosen = teamChosen;
@@ -83,18 +82,18 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
         bm = new Bitmap[this.entite];
         for(int j=0; j<bm.length;j++){
             if(j==intru){
-                if(xplosed==true) {
-                    bm[j] = BitmapFactory.decodeResource(getResources(), R.drawable.xplosion);
-
-                }else{
-                    bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(this.teamChosen,this.shipChosen,true));
-
-                }
+                bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(this.teamChosen,this.shipChosen,true));
             } else{
                 bm[j] = BitmapFactory.decodeResource(getResources(), getDrawableFromIds(this.teamChosen,this.shipChosen,false));
             }
         }
-        animV.InitParam(this.bm,this.vitesse,this.intru);
+
+        if(teamChosen==0){
+            laserColor=Color.GREEN;
+        } else {laserColor=Color.RED;}
+
+
+        animV.InitParam(this.bm,this.vitesse,this.intru,this.laserColor);
     }
 
     public int getDrawableFromIds(int teamChosen, int shipChosen, boolean isIntruder){
@@ -161,10 +160,26 @@ public class GameFragment extends Fragment implements View.OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
+        animV.fired=true;
+        animV.touchedPosition[0]=event.getX();
+        animV.touchedPosition[1]=event.getY();
+
+        animV.distGaucheRest[0]=0;
+        animV.distGaucheRest[1]=animV.screenSizeY;
+        animV.fireGauchePas[0]=event.getX()/20;
+        animV.fireGauchePas[1]=(animV.screenSizeY-event.getY())/20;
+
+        animV.distDroitRest[0]=animV.screenSizeX;
+        animV.distDroitRest[1]=animV.screenSizeY;
+        animV.fireDroitPas[0]=(animV.screenSizeX-event.getX())/20;
+        animV.fireDroitPas[1]=(animV.screenSizeY-event.getY())/20;
+
+        numberOfShots++;
+
         if(animV.pos[intru][0]-100<event.getX() && event.getX()<animV.pos[intru][0]+100 &&
                 animV.pos[intru][1]-100<event.getY() && event.getY()<animV.pos[intru][1]+100) {
             winListener.onWin(true);
-
+            animV.xplosed=true;
         } else {
             winListener.onWin(false);
         }

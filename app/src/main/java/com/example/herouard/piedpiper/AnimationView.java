@@ -2,8 +2,10 @@ package com.example.herouard.piedpiper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.view.View;
@@ -43,12 +45,26 @@ public class AnimationView extends View {
     //Matrice de mouvement
     Matrix matrix;
 
-    public AnimationView(Context context, Bitmap[] bm, int vitesse,int intru) {
+    //Ship explosé
+    boolean xplosed;
+    int countBeforeXplose;
+
+    //Tire effectué
+    boolean fired;
+    //Variable de tire
+    float[] touchedPosition;
+    float[] distGaucheRest;
+    float[] distDroitRest;
+    float[] fireGauchePas;
+    float[] fireDroitPas;
+    int laserColor;
+
+    public AnimationView(Context context, Bitmap[] bm, int vitesse,int intru,int laserColor) {
         super(context);
-        InitParam(bm,vitesse,intru);
+        InitParam(bm,vitesse,intru,laserColor);
     }
 
-    public void InitParam(Bitmap[] bm, int vitesse, int intru) {
+    public void InitParam(Bitmap[] bm, int vitesse, int intru, int laserColor) {
 
         //On recupere la taille de l'ecran
         screenSizeX = getResources().getDisplayMetrics().widthPixels;
@@ -56,6 +72,9 @@ public class AnimationView extends View {
 
         //On recupere toutes nos images
         this.bm = bm;
+
+        //On recupere la couleur du laser
+        this.laserColor = laserColor;
 
         //Et celui qui est l'intru
         this.intru = intru;
@@ -79,11 +98,32 @@ public class AnimationView extends View {
                     bm[j].getWidth() - 1, bm[j].getHeight() - 1);
         }
 
-        //On definit le pas et la distance
+        //On definit le pas
         step = vitesse;
 
         // On creer la matrice
         matrix = new Matrix();
+
+        //Parametre dans le cas ou l'ecran est touché / pour les laser
+        fired=false;
+        touchedPosition = new float[2];
+        distGaucheRest = new float[2];
+        distGaucheRest[0]=0;
+        distGaucheRest[1]=screenSizeY;
+        fireGauchePas = new float[2];
+        fireGauchePas[0]=0;
+        fireGauchePas[1]=0;
+
+        distDroitRest = new float[2];
+        distDroitRest[0]=screenSizeX;
+        distDroitRest[1]=screenSizeY;
+        fireDroitPas = new float[2];
+        fireDroitPas[0]=0;
+        fireDroitPas[1]=0;
+
+        //Au cas ou le vaiseau explose
+        xplosed=false;
+        countBeforeXplose=0;
 
     }
 
@@ -98,13 +138,51 @@ public class AnimationView extends View {
                 matrix.reset();
                 matrix.postTranslate(pos[j][0]-bm[j].getWidth()/2, pos[j][1]-bm[j].getHeight()/2);
 
-                canvas.drawBitmap(resultBitmap[j], matrix,null);
-
-                distance[j] += step;
+                if(xplosed && j==intru){
+                    distance[j] += 0;
+                    countBeforeXplose++;
+                    if(countBeforeXplose>20){
+                        canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.xplosion), matrix,null);
+                    }else{
+                        canvas.drawBitmap(resultBitmap[j], matrix,null);
+                    }
+                } else{
+                    canvas.drawBitmap(resultBitmap[j], matrix,null);
+                    distance[j] += step;
+                }
             }else{
                 distance[j] = 0;
             }
         }
+
+        if(fired){
+            Paint paint = new Paint();
+            paint.setColor(laserColor);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(distGaucheRest[0], distGaucheRest[1], distGaucheRest[0]+fireGauchePas[0], distGaucheRest[1]-fireGauchePas[1], paint);
+            canvas.drawLine(distDroitRest[0], distDroitRest[1], distDroitRest[0]-fireDroitPas[0], distDroitRest[1]-fireDroitPas[1], paint);
+        }
+        if(distGaucheRest[0]<touchedPosition[0]){
+            distGaucheRest[0]+=fireGauchePas[0];
+        }
+        if(distGaucheRest[1]>touchedPosition[1])
+        {
+            distGaucheRest[1]-=fireGauchePas[1];
+        }
+        if(distDroitRest[0]>touchedPosition[0]){
+            distDroitRest[0]-=fireDroitPas[0];
+        }
+        if(distDroitRest[1]>touchedPosition[1])
+        {
+            distDroitRest[1]-=fireDroitPas[1];
+        }
+
+        if(distGaucheRest[0]<touchedPosition[0]||distGaucheRest[1]>touchedPosition[1]||distDroitRest[0]>touchedPosition[0]||distDroitRest[1]>touchedPosition[1]){
+
+        } else{
+            fired=false;
+        }
+
         invalidate();
     }
 
