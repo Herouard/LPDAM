@@ -2,7 +2,7 @@
 
 # StarShooter
 
-Actual version : 1.3
+Actual version is 1.3
  
 This application allow you to play a little StarWars’s theme based game. 
 You can choose a number of ships, a team, ships for your team.
