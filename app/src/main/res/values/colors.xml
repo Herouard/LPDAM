@@ -4,4 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="translucent_black">#B0000000</color>
+    <color name="blanc">#ffffff</color>
+    <color name="grisTresClair">#f6f6f6</color>
+    <color name="grisClair">#d2d2d2</color>
+    <color name="grisMoyenClair">#cacaca</color>
+    <color name="grisMoyen">#a5a5a5</color>
+    <color name="grisFonce">#707070</color>
+    <color name="vertPommeLight">#ddffdd</color>
+    <color name="vertPommeLightMed">#aaddaa</color>
 </resources>

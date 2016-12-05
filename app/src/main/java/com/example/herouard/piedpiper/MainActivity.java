@@ -12,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, MenuFragment.OnActionListener, GameFragment.OnWinListener {
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     //param pour la next view
     int entite,vitesse,teamChosen,shipChosen;
     C_LocalData localData;
+    Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,29 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             mMediaPlayer.start();
             v.vibrate(100);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.m_menu, menu);
+        mMenu = menu;
+        mMenu.getItem(0).setTitle("Scores");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.id_menu_theme:
+
+                Intent intent = new Intent(MainActivity.this, Score.class);
+                startActivity(intent);
+
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
 
