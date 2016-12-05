@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 /**
  * Created by lpsil02 on 18/10/2016.
  */
 public class PopUp extends Activity {
 
+    Realm realm;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        realm = Realm.getInstance(this);
+
         setContentView(R.layout.popupwindow);
         RelativeLayout ll = (RelativeLayout) findViewById(R.id.popLayout);
         RelativeLayout ll2 = (RelativeLayout) findViewById(R.id.popUpInerLayout);
@@ -30,6 +39,22 @@ public class PopUp extends Activity {
         Intent intent = getIntent();
         int teamchosen = intent.getIntExtra("team",0);
         int numberOfShots = intent.getIntExtra("numberOfShots",1);
+
+        RealmResults<BDD_Score> result = realm.where(BDD_Score.class)
+                .findAll();
+
+        int idKey = 0;
+        for (BDD_Score bdd_score : result) {
+            idKey = bdd_score.getId();
+        }
+        idKey++;
+
+        realm.beginTransaction();
+        BDD_Score bdd_score = realm.createObject(BDD_Score.class);
+        bdd_score.setScore(5);
+        bdd_score.setScore(10);
+        realm.commitTransaction();
+        realm.close();
 
         ll.setOnTouchListener(new View.OnTouchListener() {
             @Override
