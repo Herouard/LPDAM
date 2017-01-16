@@ -21,13 +21,13 @@ import io.realm.RealmResults;
  */
 public class PopUp extends Activity {
 
-    Realm realm;
+    //Realm realm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        realm = Realm.getInstance(this);
+        //realm = Realm.getInstance(this);
 
         setContentView(R.layout.popupwindow);
         RelativeLayout ll = (RelativeLayout) findViewById(R.id.popLayout);
@@ -39,7 +39,7 @@ public class PopUp extends Activity {
         Intent intent = getIntent();
         int teamchosen = intent.getIntExtra("team",0);
         int numberOfShots = intent.getIntExtra("numberOfShots",1);
-
+/*
         RealmResults<BDD_Score> result = realm.where(BDD_Score.class)
                 .findAll();
 
@@ -55,7 +55,7 @@ public class PopUp extends Activity {
         bdd_score.setScore(10);
         realm.commitTransaction();
         realm.close();
-
+*/
         ll.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

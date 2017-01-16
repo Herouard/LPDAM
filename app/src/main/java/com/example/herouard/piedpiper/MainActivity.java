@@ -127,29 +127,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.m_menu, menu);
-        mMenu = menu;
-        mMenu.getItem(0).setTitle("Scores");
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.id_menu_theme:
-
-                Intent intent = new Intent(MainActivity.this, Score.class);
-                startActivity(intent);
-
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
-
 
     class ExamplePagerAdapter extends FragmentStatePagerAdapter {
 
